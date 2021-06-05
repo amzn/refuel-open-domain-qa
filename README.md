@@ -1,15 +1,22 @@
-## My Project
+# Answering Ambiguous Questions through Generative Evidence Fusion and Round-Trip Prediction
 
-TODO: Fill this README out!
+This repository is the implementation of our ACL 2021 *Answering Ambiguous Questions through Generative Evidence Fusion and Round-Trip Prediction*.
 
-Be sure to:
+**The code will be available soon. Stay tuned.**
 
-* Change the title in this README
-* Edit your repository description on GitHub
 
-## Security
+## How do I cite this work?
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+For now, cite the [Arxiv paper](https://arxiv.org/abs/2011.13137):
+
+```
+@article{gao2020answering,
+  title={Answering Ambiguous Questions through Generative Evidence Fusion and Round-Trip Prediction},
+  author={Gao, Yifan and Zhu, Henghui and Ng, Patrick and Santos, Cicero Nogueira dos and Wang, Zhiguo and Nan, Feng and Zhang, Dejiao and Nallapati, Ramesh and Arnold, Andrew O and Xiang, Bing},
+  journal={arXiv preprint arXiv:2011.13137},
+  year={2020}
+}
+```
 
 ## License
 
