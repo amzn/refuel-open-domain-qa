@@ -2,7 +2,7 @@
 
 This repository is the implementation of our ACL 2021 *Answering Ambiguous Questions through Generative Evidence Fusion and Round-Trip Prediction*.
 
-**The code will be available soon. Stay tuned.**
+**The code will be available soon. Stay tuned!**
 
 
 ## How do I cite this work?
