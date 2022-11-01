@@ -1,0 +1,7 @@
+torch==1.4.0+cu100
+transformers==2.9.0
+spacy==2.3.2
+faiss-cpu
+joblib
+scipy
+pycocoevalcap
