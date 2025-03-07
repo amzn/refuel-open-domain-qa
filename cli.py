@@ -32,9 +32,6 @@ from run import run, run_over_generate, run_lm_filtering, run_em_filtering, run_
 
 import requests, json
 
-############## SM ################
-WEBHOOK_URI = 'https://hooks.chime.aws/incomingwebhooks/233ea0a7-b376-4a7c-9159-a2518fc73f8b?token=TU9nbVc4ZTV8MXxqVnBvanQwb293U0JyN3prSzZtZy1DRmlrR09kRVE1SXNIUkRoT2pFM3pr'
-
 def post_message(msg):
   response = None
   try:
