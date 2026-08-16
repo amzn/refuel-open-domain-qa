@@ -89,14 +89,14 @@ class AlbertSpanPredictor(AlbertForQuestionAnswering):
             return start_logits.view(N, M, L), end_logits.view(N, M, L), sel_logits.view(N, M)
 
 def get_loss(start_positions, end_positions, answer_mask, start_logits, end_logits, sel_logits, N, M):
-    answer_mask = answer_mask.type(torch.FloatTensor).cuda()
+    answer_mask = answer_mask.type(torch.FloatTensor).to(start_positions.device)
     ignored_index = start_logits.size(1)
     start_positions.clamp_(0, ignored_index)
     end_positions.clamp_(0, ignored_index)
     loss_fct = CrossEntropyLoss(reduction='none', ignore_index=ignored_index)
 
     sel_logits = sel_logits.view(N, M)
-    sel_labels = torch.zeros(N, dtype=torch.long).cuda()
+    sel_labels = torch.zeros(N, dtype=torch.long).to(start_positions.device)
     sel_loss = torch.sum(loss_fct(sel_logits, sel_labels))
     start_losses = [(loss_fct(start_logits, _start_positions) * _span_mask) \
                     for (_start_positions, _span_mask) \
@@ -107,12 +107,14 @@ def get_loss(start_positions, end_positions, answer_mask, start_logits, end_logi
     loss_tensor = torch.cat([t.unsqueeze(1) for t in start_losses], dim=1) + \
         torch.cat([t.unsqueeze(1) for t in end_losses], dim=1)
     loss_tensor=loss_tensor.view(N, M, -1).max(dim=1)[0]
-    span_loss = _take_mml(loss_tensor)
+    span_loss = _take_mml(loss_tensor, start_positions.device)
     return span_loss + sel_loss
 
-def _take_mml(loss_tensor):
+def _take_mml(loss_tensor, device=None):
+    if device is None:
+        device = loss_tensor.device
     marginal_likelihood = torch.sum(torch.exp(
             - loss_tensor - 1e10 * (loss_tensor==0).float()), 1)
     return -torch.sum(torch.log(marginal_likelihood + \
-                                torch.ones(loss_tensor.size(0)).cuda()*(marginal_likelihood==0).float()))
+                                torch.ones(loss_tensor.size(0), device=device)*(marginal_likelihood==0).float()))
 
